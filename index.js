@@ -30,9 +30,21 @@ async function run() {
     try {
 
         const teacherCollection = client.db('synergy').collection('classes');
+        const usersCollection = client.db('synergy').collection('users');
 
+        // user related api
+        app.post('/users', async (req, res) => {
+            const user = req.body;
+            // const query = { email: user.email }
+            // const existingUser = await usersCollection.findOne(query);
+            // if (existingUser) {
+            //     return res.send({ message: "user already exists", insertedId: null })
+            // }
+            const result = await usersCollection.insertOne(user)
+            res.send(result)
+        })
 
-
+        // class related api
         app.post('/class', async (req, res) => {
             const create = req.body;
             console.log({ create });
